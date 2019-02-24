@@ -1,9 +1,0 @@
-2.
-Create a new React application in a directory called Jammming.
-
-NTTDATA608450+108880@NTTDATA608450 MINGW64 /c/Student/Codecademy
-$ cd "C:\Student\Codecademy\BuildFrontEndWebApplications\projects"
-
-mkdir: make new directory
-
-touch or echo >> : create new file

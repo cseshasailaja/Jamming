@@ -4,29 +4,26 @@ const response_type = 'token';
 const scope = 'playlist-modify-public';
 const redirect_uri = 'http://localhost:3000/';
 const authorization_url = `${url}?client_id=${client_id}&response_type=${response_type}&scope=${scope}&redirect_uri=${redirect_uri}`;
-const currentAccessToken = '';
-const expirationTimeInSeconds = 0;
+let usersAccessToken = '';
+let expirationTimeInSeconds = 0;
 
 const Spotify = {
   getAccessToken: function() {
-    if (currentAccessToken) {
-      console.log(`Access token already exist: ${currentAccessToken}!`);
-      return currentAccessToken;
-    };
-    //let accessToken = /access_token=(.*?)&/.exec(window.location.href);
-    //let expirationTime = /expires_in=(.*)/.exec(window.location.href);
     let accessToken = window.location.href.match(/access_token=([^&]*)/);
     let expirationTime = window.location.href.match(/expires_in=([^&]*)/);
-    if (accessToken && expirationTime) {
+    if (usersAccessToken) {
+      console.log(`Access token already exist: ${usersAccessToken}!`);
+      return usersAccessToken;
+    } else if (accessToken && expirationTime) {
       console.log(`Acquired access token: ${accessToken}`);
-      currentAccessToken = accessToken[1];
+      usersAccessToken = accessToken[1];
       expirationTimeInSeconds = expirationTime[1];
-      window.setTimeout(() => currentAccessToken = '', expirationTimeInSeconds * 1000);
+      window.setTimeout(() => usersAccessToken = '', expirationTimeInSeconds * 1000);
       window.history.pushState('Access Token', null, '/');
-      return currentAccessToken;
+      return usersAccessToken;
     } else {
       console.log('No access token found. Redirecting...');
-      window.location.replace(authorization_url);
+      window.location = authorization_url;
       return '';
     }
   },
@@ -53,7 +50,7 @@ const Spotify = {
           return {
             id: track.id,
             name: track.name,
-            artist: track.artist[0].name,
+            artist: track.artists[0].name,
             album: track.album.name,
             uri: track.uri
           }
@@ -118,27 +115,7 @@ const Spotify = {
     });
     if (!playlistID) {
       return;
-    }
-    const snapshotID = await fetch(`https://spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks?`, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify({uris: playlistTracks})
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      console.log(`Error saving playlist ${playlistName}.`);
-    }, networkError => console.log(networkError.message)
-  )
-  .then(jsonResponse => {
-    if (jsonResponse && jsonResponse.snapshot_id) {
-      return jsonResponse.snapshot_id;
-    }
-    else if (jsonResponse && jsonResponse.error) {
-      console.log(`Error saving playlist ${playlistName}: ${jsonResponse.error.message}`);
-    }
-  });
+    }    
   }
 
 };

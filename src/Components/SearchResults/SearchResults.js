@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TrackList from '../TrackList/TrackList';
 import './SearchResults.css';
 
@@ -10,7 +10,7 @@ class SearchResults extends React.Component {
         <TrackList
         tracks={this.props.searchResults}
         onAdd={this.props.onAdd}
-        onRemove={this.props.onRemove}         
+        onRemove={this.props.onRemove}
         isRemoval={false} />
       </div>
     );

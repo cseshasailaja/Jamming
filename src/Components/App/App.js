@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
@@ -16,8 +16,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {searchResults: [
-],
-      playlistName: 'New playlist',
+      {name: 'Tiny Dancer', artist: 'Elton John', album: 'Madman Across The Water', id: '0'},
+      {name: 'Tiny Dancer', artist: 'Tim McGraw', album: 'Love Story', id: '1'},
+      {name: 'Tiny Dancer', artist: 'Rockabye Baby!', album: 'Lullaby Renditions of Elton John', id: '2'},
+      {name: 'Tiny Dancer', artist: 'The White Raven', album: 'Tiny Dancer', id: '3'},
+      {name: 'Tiny Dancer - Live Album Version', artist: 'Ben Folds', album: 'Ben Folds Live', id: '4'}
+    ],
+      playlistName: 'New Playlist',
       playlistTracks: []
     };
       this.addTrack = this.addTrack.bind(this);
@@ -47,7 +52,7 @@ class App extends React.Component {
   savePlaylist() {
     let trackURIs = this.state.playlistTracks.map(track => track.uri);
     Spotify.savePlaylist(this.state.playlistName, trackURIs);
-    this.setState({playlistName: 'New playlist'});
+    this.setState({playlistName: 'New Playlist'});
     this.setState({playlistTracks: [] });
   }
 
@@ -66,7 +71,6 @@ class App extends React.Component {
           <SearchBar onSearch={this.state.search} />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
-
             <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName}  onSave={this.savePlaylist} />
           </div>
         </div>
