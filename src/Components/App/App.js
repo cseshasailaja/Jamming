@@ -6,7 +6,8 @@ import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import Spotify from './../../util/Spotify';
 
-/*{name: 'Tiny Dancer', artist: 'Elton John', album: 'Madman Across The Water', id: '0'},
+/* searchResults array:
+{name: 'Tiny Dancer', artist: 'Elton John', album: 'Madman Across The Water', id: '0'},
 {name: 'Tiny Dancer', artist: 'Tim McGraw', album: 'Love Story', id: '1'},
 {name: 'Tiny Dancer', artist: 'Rockabye Baby!', album: 'Lullaby Renditions of Elton John', id: '2'},
 {name: 'Tiny Dancer', artist: 'The White Raven', album: 'Tiny Dancer', id: '3'},
